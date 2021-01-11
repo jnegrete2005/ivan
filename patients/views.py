@@ -17,7 +17,7 @@ class IndexView(ListView):
   template_name = 'patients/index.html'
   context_object_name = 'patients'
   ordering = ['last_names']
-  paginate_by = 10
+  paginate_by = 1
 
 
 class SearchView(ListView):

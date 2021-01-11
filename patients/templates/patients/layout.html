@@ -76,7 +76,7 @@
       <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
         <li class="page-item">
-          <a href="?page=1" class="page-link">First</a>
+          <a href="?page=1" class="page-link">Primera</a>
         </li>
         <li class="page-item">
           <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
@@ -85,7 +85,7 @@
         </li>
         {% else %}
         <li class="page-item disabled">
-          <a href="?page=1" class="page-link">First</a>
+          <a href="?page=1" class="page-link">Primera</a>
         </li>
         <li class="page-item disabled">
           <a href="#" class="page-link">
@@ -115,7 +115,7 @@
           </a>
         </li>
         <li class="page-item">
-          <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Last</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Última</a>
         </li>
         {% else %}
         <li class="page-item disabled">
@@ -124,7 +124,7 @@
           </a>
         </li>
         <li class="page-item disabled">
-          <a href="#" class="page-link">Last</a>
+          <a href="#" class="page-link">Última</a>
         </li>
         {% endif %}
       </ul>

@@ -1,0 +1,146 @@
+{% extends "patients/layout.html" %}
+{% load static %}
+
+{% block title %}{{ patient }}{% endblock title %}
+
+{% block body %}
+  
+<div class="border-patients mb-2 mb-md-3 mb-lg-4">
+  <!-- Name, age, and edit -->
+  <div class="row row-cols-1 row-cols-lg-2">
+    <div class="col col-lg-8">
+      <h2 class="mb-3 mb-lg-0">Paciente: {{ patient }}</h2>
+    </div>
+    <div class="col col-lg-4">
+      <h2 class="mb-0">Edad: {{ patient.get_age }}</h2>
+    </div>
+  </div>
+
+  <!-- Bday, cel, and job -->
+  <div class="row mt-3 row-cols-1 row-cols-lg-3">
+    <div class="col col-lg-4">
+      <p class="fs-4"><strong>Cumpleaños:</strong> {{ patient.bday }}</p>
+    </div>
+
+    <div class="col col-lg-4">
+      <p class="fs-4"><strong>Cel/telf:</strong> {{ patient.cel }}</p>
+    </div>
+    
+    <div class="col col-lg-4">
+      <p class="fs-4 {% if patient.company %}{% else %}mb-0{% endif %}"><strong>Ocupación:</strong> {{ patient.job }}</p>
+    </div>
+  </div>
+
+  {% if patient.company %}
+  <!-- Company -->
+  <div class="row">
+    <div class="col">
+      <p class="fs-4 mb-0"><strong>Companía: </strong>{{ patient.company }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <hr class="mt-4 mb-4">
+
+  <!-- Allergies -->
+  <div class="row">
+    <div class="col">
+      <p class="fs-4"><strong>Alergias:</strong> {% if patient.allergies %}{{ patient.allergies }}{% else %}No tiene{% endif %}</p>
+    </div>
+  </div>
+  
+  <!-- Pathological history -->
+  <div class="row">
+    <div class="col">
+      <p class="fs-4"><strong>Antec. Pat:</strong> {% if patient.patho_histo %}{{ patient.patho_histo }}{% else %}No tiene{% endif %}</p>
+    </div>
+  </div>
+
+  <!-- Family history -->
+  <div class="row">
+    <div class="col">
+      <p class="fs-4"><strong>Antec. Fam:</strong> {% if patient.fam_histo %}{{ patient.fam_histo }}{% else %}No tiene{% endif %}</p>
+    </div>
+  </div>
+
+  <!-- Edit and delete buttons -->
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'edit_patient' patient.id %}" class="btn btn-secondary me-1">Editar</a>
+      <button type="button" class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Eliminar paciente
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">¿Estás seguro de que quieres eliminar a este paciente?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Esta acción no se puede revertir, así que piénsalo antes de hacerlo
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <form id="delete-patient" onsubmit="deletePatient({{ patient.id }})">
+            <input type="submit" class="btn btn-danger" value="Sí, estoy seguro">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="mt-4 mb-4">
+
+  <form method="POST" action="{% url 'patient' patient.id %}" class="border-patients" id="new-visit">
+    {% csrf_token %}
+    <div class="mb-3">
+      <h3>Nueva consulta</h3>
+    </div>
+    <div class="mb-3">
+      <label for="symptomsInput" class="form-label">Síntomas</label>
+      <textarea name="symptoms" id="symptomsInput" class="form-control" rows="3" required></textarea>
+    </div>
+    <div class="mb-4">
+      <label for="treatmentInput" class="form-label">Tratamiento</label>
+      <textarea name="treatment" id="treatmentInput" class="form-control" rows="3" required></textarea>
+    </div>
+    <div>
+      <input type="submit" value="Guardar" class="btn btn-primary">
+    </div>
+  </form>
+
+  {% if not patient.is_first_visit %}
+  <hr class="mt-4 mb-4">
+
+  <div class="row mb-3">
+    <div class="col">
+      <h3>Consultas pasadas</h3>
+    </div>
+  </div>
+  <!-- This are all the visits and the creation of a visit -->
+  {% for visit in visits %}
+  <div class="row mb-4">
+  <div class="col">
+    <div class="card bg-light grow-1 rounded">
+      <div class="card-body text-dark">
+        <h5 class="card-title mb-0">{{ visit.date }}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Síntomas:</strong> {{ visit.symptoms }}</li>
+        <li class="list-group-item"><strong>Tratamiento:</strong> {{ visit.treatment }}</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+</div>
+
+<script src="{% static 'patients/delete_patient.js' %}"></script>
+{% endblock body %}

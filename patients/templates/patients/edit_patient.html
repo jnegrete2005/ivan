@@ -1,0 +1,90 @@
+{% extends "patients/layout.html" %}
+
+{% block title %}{{ patient }} | Editar paciente{% endblock title %}
+
+{% block body %}
+  
+<form class="border-patients" action="{% url 'edit_patient' patient.id %}" method="POST">
+  {% csrf_token %}
+  <div class="row mb-3">
+    <div class="col">
+      <h2 class="">Editar Paciente</h2>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="row row-cols-1 row-cols-md-2 mb-auto mb-md-3">
+    <div class="col mb-3 mb-md-auto">
+      <label for="namesInput" class="form-label">Nombres</label>
+      <input type="text" name="names" id="namesInput" value="{{ patient.names }}" class="form-control" maxlength="70" required>
+    </div>
+    <div class="col mb-3 mb-md-auto">
+      <label for="lastNamesInput" class="form-label">Apellidos</label>
+      <input type="text" name="last_names" id="lastNamesInput" value="{{ patient.last_names }}" class="form-control" maxlength="70" required>
+    </div>
+  </div>
+
+  <!-- Bday, cel, and id -->
+  <div class="row row-cols-1 row-cols-md-3 mb-auto mb-md-3">
+    <div class="col mb-3 mb-md-auto">
+      <label for="bdayInput" class="form-label">Cumpleaños</label>
+      <input type="date" name="bday" id="bdayInput" value="{{ patient.bday|date:'Y-m-d' }}" class="form-control" required>
+    </div>
+    <div class="col mb-3 mb-md-auto">
+      <label for="celInput" class="form-label">Cel/Telf</label>
+      <input type="tel" name="cel" id="celInput" value="{{ patient.cel }}" class="form-control" required>
+    </div>
+    <div class="col mb-3 mb-md-auto">
+      <label for="idNumInput" class="form-label">Cédula</label>
+      <input type="number" name="id_num" id="idNumInput" value="{{ patient.id_num }}" class="form-control" required>
+    </div>
+  </div>
+
+  <!-- Email, job, and company -->
+  <div class="row row-cols-1 row-cols-md-3 mb-auto mb-md-3">
+    <div class="col mb-3 mb-md-auto">
+      <label for="mailInput" class="form-lable">Email</label>
+      <input type="email" name="mail" id="mailInput" value="{{ patient.mail }}" class="form-control" required>
+    </div>
+    <div class="col mb-3 mb-md-auto">
+      <label for="jobInput" class="form-lable">Ocupación</label>
+      <input type="text" name="job" id="jobInput" value="{{ patient.job }}" class="form-control" maxlength="100" required>
+    </div>
+    <div class="col mb-3 mb-md-auto">
+      <label for="companyInput" class="form-lable">Compañía</label>
+      <input type="text" name="company" id="companyInput" value="{{ patient.company }}" class="form-control" maxlength="200">
+    </div>
+  </div>
+
+  <!-- Allergies -->
+  <div class="row mb-auto mb-md-3">
+    <div class="col">
+      <label for="allergiesInput" class="form-lable">Alergias</label>
+      <input type="text" name="allergies" id="allergiesInput" value="{{ patient.allergies }}" class="form-control" maxlength="300">
+    </div>
+  </div>
+
+  <!-- Pathological history -->
+  <div class="row mb-auto mb-md-3">
+    <div class="col">
+      <label for="pathoInput" class="form-lable">Antec. Pat</label>
+      <input type="text" name="patho_histo" id="pathoInput" value="{{ patient.patho_histo }}" class="form-control" maxlength="300">
+    </div>
+  </div>
+
+  <!-- Family history -->
+  <div class="row mb-4">
+    <div class="col">
+      <label for="famInput" class="form-lable">Antec. Fam</label>
+      <input type="text" name="fam_histo" id="famInput" value="{{ patient.fam_histo }}" class="form-control" maxlength="300">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <input type="submit" value="Guardar" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+
+{% endblock body %}

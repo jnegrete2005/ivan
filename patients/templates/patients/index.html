@@ -1,0 +1,46 @@
+{% extends "patients/layout.html" %}
+
+{% block body %}
+
+{% if not patients %}
+
+<div class="row row-cols-1 row-cols-lg-3 mt-3 mt-md-5">
+  <div class="col col-lg-3"></div>
+  <div class="col col-lg-6">
+    <div class="alert alert-warning grow" role="alert">
+      <h4 class="alert-heading">¡No hay resultados!</h4>
+      No hay pacientes que empiezen con ese nombre, ¡intenta con otro!
+      <hr>
+      <span class="mb-0">
+        <a href="{% url 'index' %}" class="btn btn-primary stretched-link">Volver a la página principal</a>
+      </span>
+    </div>
+  </div>
+  <div class="col col-lg-3"></div>
+</div>
+
+{% endif %}
+
+<div id="card-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+  {% for patient in patients %}
+  <div class="col">
+    <div class="card bg-light grow">
+      <div class="card-body text-dark">
+        <h5 class="card-title mb-0">{{ patient }}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Edad: {{ patient.get_age }}</li>
+        <li class="list-group-item">Cédula: {{ patient.id_num }}</li>
+        <li class="list-group-item">Celular: {{ patient.cel }}</li>
+      </ul>
+      <div class="card-body text-dark">
+        <a href="{% url 'patient' patient.id %}" class="btn btn-primary stretched-link">Ver Consultas</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+{% endblock body %}

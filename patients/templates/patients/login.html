@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Iniciar Sesión</title>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container mt-3">
+    <div class="row mb-2 mb-md-3">
+      <div class="col">
+        <h1>Iniciar sesión</h1>
+      </div>
+    </div>
+
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="mb-3 mb-md-4">
+        <label for="inputEmail" class="form-label col-form-label-lg">Nombre de usuario</label>
+        <input type="text" name="username" id="inputEmail" class="form-control form-control-lg">
+      </div>
+      <div class="mb-4 mb-md-5">
+        <label for="inputPassword" class="form-label col-form-label-lg">Contraseña</label>
+        <input type="password" name="password" id="inputPassword" class="form-control form-control-lg">
+      </div>
+      <div>
+        <input type="submit" class="btn btn-outline-dark" value="Iniciar Sesión">
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

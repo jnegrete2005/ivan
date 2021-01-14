@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -17,7 +18,7 @@ class IndexView(ListView):
   template_name = 'patients/index.html'
   context_object_name = 'patients'
   ordering = ['last_names']
-  paginate_by = 1
+  paginate_by = 10
 
 
 class SearchView(ListView):
@@ -84,6 +85,7 @@ def create_patient(request):
   return render(request, 'patients/create_patient.html')
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def edit_patient(request, pk):
   p = get_object_or_404(Patient, pk=pk)
 
@@ -109,6 +111,7 @@ def edit_patient(request, pk):
   return render(request, 'patients/edit_patient.html', {'patient': p})
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def delete_patient(request, pk):
   if request.method == 'DELETE':
     get_object_or_404(Patient, pk=pk).delete()

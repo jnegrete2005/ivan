@@ -58,7 +58,18 @@ class PatientTestCase(TestCase):
     )
 
     # Create a sample User
-    User.objects.create_user('user', 'user@example.com', 'password')
+    User.objects.create_user(
+      username='user',
+      password='password',
+      is_superuser=True
+    )
+
+    # Create a non-superuser
+    User.objects.create_user(
+      username='notsuper',
+      password='notsuper',
+      is_superuser=False
+    )
 
 
   # Test model functions
@@ -83,7 +94,10 @@ class PatientTestCase(TestCase):
     self.assertFalse(p.is_first_visit())
 
 
-  # Client Testing
+
+  """
+  Client testing
+  """
   def test_invalid_login(self):
     """Checks the that the status code is 200, because it doesn't should redirect"""
     c = Client()
@@ -166,7 +180,7 @@ class PatientTestCase(TestCase):
     c = Client()
     c.post('/accounts/login/', {'username': 'user', 'password': 'password'})
 
-    response = c.get('/busqueda/?q=negrete')
+    response = c.get('/busqueda?q=negrete')
 
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['patients'][0].id, 3)
@@ -202,6 +216,30 @@ class PatientTestCase(TestCase):
     self.assertEqual(response.status_code, 302)
     self.assertEqual(p.names, 'Joaquin Daniel Si')
 
+  def test_edit_patient_invalid(self):
+    """Checks if you can edit a patient without being superuser"""
+    c = Client()
+    c.post('/accounts/login/', {'username': 'notsuper', 'password': 'notsuper'})
+
+    response = c.post('/editar/1/', {
+      'names': 'Joaquin Daniel Si',
+      'last_names': 'Negrete Saab',
+      'bday': '2005-03-07',
+      'cel': '0999268112',
+      'id_num': '0930336680',
+      'mail': 'joaquin.negrete03@gmail.com',
+      'job': 'Estudiante',
+      'company': '',
+      'allergies': '',
+      'patho_histo': '',
+      'fam_histo': 'Dad has diabetes'
+    })
+
+    p = Patient.objects.get(pk=1)
+
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(p.names, 'Joaquin Daniel')
+
   def test_delete_patient(self):
     """Checks if the delete patient function works"""
     c = Client()
@@ -217,3 +255,19 @@ class PatientTestCase(TestCase):
 
     self.assertEqual(response.status_code, 204)
     self.assertFalse(patient_exists)
+
+  def test_delete_patient_invalid(self):
+    """Check if you can access delete url when you are not superuser"""
+    c = Client()
+    c.post('/accounts/login/', {'username': 'notsuper', 'password': 'notsuper'})
+
+    response = c.delete('/eliminar/2/')
+
+    patient_exists = True
+    try:
+      Patient.objects.get(pk=2)
+    except ObjectDoesNotExist:
+      patient_exists = False
+
+    self.assertEqual(response.status_code, 302)
+    self.assertTrue(patient_exists)

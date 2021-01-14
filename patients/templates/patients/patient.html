@@ -1,5 +1,6 @@
 {% extends "patients/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ patient }}{% endblock title %}
 
@@ -19,7 +20,7 @@
   <!-- Bday, cel, and job -->
   <div class="row mt-3 row-cols-1 row-cols-lg-3">
     <div class="col col-lg-4">
-      <p class="fs-4"><strong>Cumpleaños:</strong> {{ patient.bday }}</p>
+      <p class="fs-4"><strong>Cumpleaños:</strong> {% language 'es' %}{{ patient.bday }}{% endlanguage %}</p>
     </div>
 
     <div class="col col-lg-4">
@@ -63,6 +64,7 @@
     </div>
   </div>
 
+  {% if user.is_superuser %}
   <!-- Edit and delete buttons -->
   <div class="row">
     <div class="col">
@@ -72,6 +74,8 @@
       </button>
     </div>
   </div>
+  {% endif %}
+  
 
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -128,7 +132,7 @@
   <div class="col">
     <div class="card bg-light grow-1 rounded">
       <div class="card-body text-dark">
-        <h5 class="card-title mb-0">{{ visit.date }}</h5>
+        <h5 class="card-title mb-0">{% language 'es' %}{{ visit.date }}{% endlanguage %}</h5>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><strong>Síntomas:</strong> {{ visit.symptoms }}</li>

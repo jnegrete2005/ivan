@@ -7,7 +7,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 
 urlpatterns = [
   path('', login_required(views.IndexView.as_view()), name='index'),
-  path('busqueda/', login_required(views.SearchView.as_view()), name='search'),
+  path('busqueda', login_required(views.SearchView.as_view()), name='search'),
   path('paciente/<int:pk>/', login_required(views.patient_view), name='patient'),
   path('crear/', login_required(views.create_patient), name='create_patient'),
   path('editar/<int:pk>/', login_required(views.edit_patient), name='edit_patient'),

@@ -37,22 +37,6 @@ class Patient(models.Model):
     """Will check if it is the patients first visit"""
     return True if not Visit.objects.filter(patient=self) else False
 
-  def serialize(self):
-    return {
-      'names': self.names,
-      'last_names': self.last_names,
-      'bday': self.bday,
-      'cel': self.cel,
-      'id_num': self.id_num,
-      'mail': self.mail,
-      'job': self.job,
-      'company': self.company,
-      'allergies': self.allergies,
-      'patho_histo': self.patho_histo,
-      'fam_histo': self.fam_histo,
-      'age': self.get_age()
-    }
-
 
 class Visit(models.Model):
   """
@@ -65,14 +49,6 @@ class Visit(models.Model):
 
   def __str__(self):
     return self.symptoms
-
-  def serialize(self):
-    return {
-      'patient': self.patient.serialize(),
-      'date': self.date,
-      'symptoms': self.symptoms,
-      'treatment': self.treatment
-    }
 
 
 class User(AbstractUser):

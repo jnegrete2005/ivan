@@ -193,11 +193,11 @@ class PatientTestCase(TestCase):
     c = Client()
     c.post('/accounts/login/', {'username': 'user', 'password': 'password'})
 
-    response = c.get('/editar/1/')
+    response = c.get('/editar/paciente/1/')
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['patient'].id, 1)
 
-    response = c.post('/editar/1/', {
+    response = c.post('/editar/paciente/1/', {
       'names': 'Joaquin Daniel Si',
       'last_names': 'Negrete Saab',
       'bday': '2005-03-07',
@@ -221,7 +221,7 @@ class PatientTestCase(TestCase):
     c = Client()
     c.post('/accounts/login/', {'username': 'notsuper', 'password': 'notsuper'})
 
-    response = c.post('/editar/1/', {
+    response = c.post('/editar/paciente/1/', {
       'names': 'Joaquin Daniel Si',
       'last_names': 'Negrete Saab',
       'bday': '2005-03-07',
@@ -271,3 +271,75 @@ class PatientTestCase(TestCase):
 
     self.assertEqual(response.status_code, 302)
     self.assertTrue(patient_exists)
+
+  def test_edit_visit_no_treatment(self):
+    """ Check if the edit visit view works correctly only editing symptoms """
+    c = Client()
+    c.post('/accounts/login/', {'username': 'user', 'password': 'password'})
+
+    visit = Visit.objects.get(patient=Patient.objects.get(names='Angie'))
+
+    response = c.get('/editar/consulta/3/')
+
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(visit.symptoms, 'Right arm ache')
+    self.assertEqual(visit.treatment, 'Paracetamol')
+
+    response = c.post('/editar/consulta/3/', {
+      'symptoms': 'Left arm ache',
+      'treatment': 'Paracetamol'
+    })
+
+    visit = Visit.objects.get(patient=Patient.objects.get(names='Angie'))
+
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(visit.symptoms, 'Left arm ache')
+    self.assertEqual(visit.treatment, 'Paracetamol')
+
+  def test_edit_visit_no_symptoms(self):
+    """ Check if the edit visit view works correctly only editing treatment """
+    c = Client()
+    c.post('/accounts/login/', {'username': 'user', 'password': 'password'})
+
+    visit = Visit.objects.get(patient=Patient.objects.get(names='Angie'))
+
+    response = c.get('/editar/consulta/3/')
+
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(visit.symptoms, 'Right arm ache')
+    self.assertEqual(visit.treatment, 'Paracetamol')
+
+    response = c.post('/editar/consulta/3/', {
+      'symptoms': 'Right arm ache',
+      'treatment': 'Cough syrup'
+    })
+
+    visit = Visit.objects.get(patient=Patient.objects.get(names='Angie'))
+
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(visit.symptoms, 'Right arm ache')
+    self.assertEqual(visit.treatment, 'Cough syrup')
+  
+  def test_edit_visit(self):
+    """ Check if the edit visit view works correctly editing both """
+    c = Client()
+    c.post('/accounts/login/', {'username': 'user', 'password': 'password'})
+
+    visit = Visit.objects.get(patient=Patient.objects.get(names='Angie'))
+
+    response = c.get('/editar/consulta/3/')
+
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(visit.symptoms, 'Right arm ache')
+    self.assertEqual(visit.treatment, 'Paracetamol')
+
+    response = c.post('/editar/consulta/3/', {
+      'symptoms': 'Left arm ache',
+      'treatment': 'Cough syrup'
+    })
+
+    visit = Visit.objects.get(patient=Patient.objects.get(names='Angie'))
+
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(visit.symptoms, 'Left arm ache')
+    self.assertEqual(visit.treatment, 'Cough syrup')

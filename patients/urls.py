@@ -10,8 +10,9 @@ urlpatterns = [
   path('busqueda', login_required(views.SearchView.as_view()), name='search'),
   path('paciente/<int:pk>/', login_required(views.patient_view), name='patient'),
   path('crear/', login_required(views.create_patient), name='create_patient'),
-  path('editar/<int:pk>/', login_required(views.edit_patient), name='edit_patient'),
+  path('editar/paciente/<int:pk>/', login_required(views.edit_patient), name='edit_patient'),
   path('eliminar/<int:pk>/', login_required(views.delete_patient), name='delete_patient'),
+  path('editar/consulta/<int:pk>/', login_required(views.edit_visit), name='edit_visit'),
   
   path('accounts/login/', views.login_view, name='login'),
   path('accounts/logout/', views.logout_view, name='logout'),

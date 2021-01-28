@@ -1,0 +1,33 @@
+{% extends "patients/layout.html" %}
+{% load i18n %}
+
+{% block title %}Editar Consulta{% endblock title %}
+
+{% block body %}
+  
+<div class="border-patients mb-2 mb-md-3 mb-lg-4">
+
+  <div class="mb-3">
+    <h2>Consulta a {{ visit.patient }}</h2>
+    <p>{% language 'es' %}{{ visit.date }}{% endlanguage %}</p>
+  </div>
+
+  <form action="{% url 'edit_visit' visit.id %}" method="post">
+    {% csrf_token %}
+    <!-- Symptoms -->
+    <div class="mb-3">
+      <label for="symptomsInput" class="form-label">Motivo de consulta</label>
+      <textarea name="symptoms" id="symptomsInput" class="form-control" rows="3">{{ visit.symptoms }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="treatmentInput" class="form-label">Tratamiento</label>
+      <textarea name="treatment" id="treatmentInput" class="form-control" rows="3">{{ visit.treatment }}</textarea>
+    </div>
+    <div>
+      <input type="submit" role="button" value="Guardar" class="btn btn-primary">
+    </div>
+  </form>
+  
+</div>
+
+{% endblock body %}

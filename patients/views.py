@@ -120,6 +120,21 @@ def delete_patient(request, pk):
   return HttpResponseBadRequest()
 
 
+def edit_visit(request, pk):
+  visit = get_object_or_404(Visit, pk=pk)
+  if request.method == 'GET':
+    return render(request, 'patients/edit_consult.html', {
+      'visit': visit
+    })
+
+  if request.method == 'POST':
+    visit.symptoms = str(request.POST['symptoms']).strip()
+    visit.treatment = str(request.POST['treatment']).strip()
+
+    visit.save(update_fields=['symptoms', 'treatment'])
+
+    return redirect('patient', pk=visit.patient.id)
+
 # Login and logout views here
 def login_view(request):
   if request.method == 'POST':

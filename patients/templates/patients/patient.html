@@ -106,12 +106,12 @@
       <h3>Nueva consulta</h3>
     </div>
     <div class="mb-3">
-      <label for="symptomsInput" class="form-label">Síntomas</label>
+      <label for="symptomsInput" class="form-label">Motivo de consulta</label>
       <textarea name="symptoms" id="symptomsInput" class="form-control" rows="3" required></textarea>
     </div>
     <div class="mb-4">
       <label for="treatmentInput" class="form-label">Tratamiento</label>
-      <textarea name="treatment" id="treatmentInput" class="form-control" rows="3" required></textarea>
+      <textarea name="treatment" id="treatmentInput" class="form-control" rows="3"></textarea>
     </div>
     <div>
       <input type="submit" value="Guardar" class="btn btn-primary">
@@ -126,11 +126,12 @@
       <h3>Consultas pasadas</h3>
     </div>
   </div>
+  
   <!-- This are all the visits and the creation of a visit -->
   {% for visit in visits %}
   <div class="row mb-4">
   <div class="col">
-    <div class="card bg-light grow-1 rounded">
+    <div class="card bg-light grow-1">
       <div class="card-body text-dark">
         <h5 class="card-title mb-0">{% language 'es' %}{{ visit.date }}{% endlanguage %}</h5>
       </div>
@@ -138,6 +139,9 @@
         <li class="list-group-item"><strong>Síntomas:</strong> {{ visit.symptoms }}</li>
         <li class="list-group-item"><strong>Tratamiento:</strong> {{ visit.treatment }}</li>
       </ul>
+      <div class="card-body">
+        <a href="{% url 'edit_visit' visit.id %}" class="btn btn-primary">Editar Consulta</a>
+      </div>
     </div>
   </div>
   </div>

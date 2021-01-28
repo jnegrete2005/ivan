@@ -4,8 +4,6 @@
 <html lang="es">
 <head>
   <title>{% block title %}Iván Argenzio{% endblock title %}</title>
-
-  <!-- <link rel="icon" href="{% static 'patients/ivan-argenzio-removebg-preview.png' %}"> -->
   
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -15,7 +13,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   
   <!-- My JS and CSS files -->
-  <link rel="stylesheet" type="text/css" href="../../static/patients/styles.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'patients/styles.css' %}">
 </head>
 <body>
   

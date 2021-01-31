@@ -1,2 +1,2 @@
-start <acceso directo de chrome>
+start ivan
 exit

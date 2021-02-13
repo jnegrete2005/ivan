@@ -19,41 +19,39 @@
   
   {% block navbar %}
   <!-- NavBar -->
-  <div class="container-md">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-      <div class="container-fluid">
-        <a href="{% url 'index' %}" class="navbar-brand">Iván Argenzio</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a href="{% url 'index' %}" class="nav-link active">Seleccionar Paciente</a>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'create_patient' %}" class="nav-link active">Crear Paciente</a>
-            </li>
-            
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{% url 'logout' %}" class="nav-link active">Cerrar Sesión</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a href="{% url 'login' %}" class="nav-link active">Iniciar Sesión</a>
-            </li>
-            {% endif %}
-          </ul>
-          <form action="{% url 'search' %}" method="GET" class="d-flex">
-            <input class="form-control me-2" name="q" type="search" placeholder="Busca un paciente" aria-label="Search">
-            <input type="submit" value="Buscar" class="btn btn-outline-success">
-          </form>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-md">
+      <a href="{% url 'index' %}" class="navbar-brand">Iván Argenzio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link active">Seleccionar Paciente</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'create_patient' %}" class="nav-link active">Crear Paciente</a>
+          </li>
+          
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url 'logout' %}" class="nav-link active">Cerrar Sesión</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="{% url 'login' %}" class="nav-link active">Iniciar Sesión</a>
+          </li>
+          {% endif %}
+        </ul>
+        <form action="{% url 'search' %}" method="GET" class="d-flex">
+          <input class="form-control me-2" name="q" type="search" placeholder="Busca un paciente" aria-label="Search">
+          <input type="submit" value="Buscar" class="btn btn-outline-success">
+        </form>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
   {% endblock navbar %}
   
   <div class="container-md mt-3 mt-lg-4 mb-4 mb-lg-5">

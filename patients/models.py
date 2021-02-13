@@ -20,6 +20,7 @@ class Patient(models.Model):
   allergies = models.CharField(max_length=300, blank=True, null=True)
   patho_histo = models.CharField(max_length=300, blank=True, null=True)
   fam_histo = models.CharField(max_length=300, blank=True, null=True)
+  insurance = models.CharField(max_length=100, blank=True, null=True)
 
   def __str__(self):
     return self.names + ' ' + self.last_names

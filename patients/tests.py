@@ -18,7 +18,8 @@ class PatientTestCase(TestCase):
       id_num='0930336680',
       mail='joaquin.negrete03@gmail.com',
       job='Estudiante',
-      fam_histo='Dad has diabetes'
+      fam_histo='Dad has diabetes',
+      insurance='Si'
     )
     p2 = Patient.objects.create(
       names='Angie',
@@ -26,7 +27,8 @@ class PatientTestCase(TestCase):
       bday=datetime.date(1969, 5, 25),
       cel='0987211868',
       mail='angie.saab@gmail.com',
-      job='Orientadora Familiar'
+      job='Orientadora Familiar',
+      insurance='No'
     )
     p3 = Patient.objects.create(
       names='Joaquin Alberto',
@@ -148,11 +150,13 @@ class PatientTestCase(TestCase):
       'company': '',
       'allergies': '',
       'patho_histo': '',
-      'fam_histo': ''
+      'fam_histo': '',
+      'insurance': 'Si'
     })
 
     self.assertEqual(response.status_code, 302)
     self.assertEqual(Patient.objects.last().names, 'Si')
+    self.assertEqual(Patient.objects.last().insurance, 'Si')
 
   def test_patient_view(self):
     """If request method is POST, it will create a Visit. Else, it will get all visits"""
@@ -208,7 +212,8 @@ class PatientTestCase(TestCase):
       'company': '',
       'allergies': '',
       'patho_histo': '',
-      'fam_histo': 'Dad has diabetes'
+      'fam_histo': 'Dad has diabetes',
+      'insurance': ''
     })
 
     p = Patient.objects.get(pk=1)
@@ -232,13 +237,15 @@ class PatientTestCase(TestCase):
       'company': '',
       'allergies': '',
       'patho_histo': '',
-      'fam_histo': 'Dad has diabetes'
+      'fam_histo': 'Dad has diabetes',
+      'insurance': 'Medical'
     })
 
     p = Patient.objects.get(pk=1)
 
     self.assertEqual(response.status_code, 302)
     self.assertEqual(p.names, 'Joaquin Daniel')
+    self.assertEqual(p.insurance, 'Si')
 
   def test_delete_patient(self):
     """Checks if the delete patient function works"""

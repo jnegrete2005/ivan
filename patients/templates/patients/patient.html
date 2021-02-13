@@ -32,14 +32,24 @@
     </div>
   </div>
 
-  {% if patient.company %}
-  <!-- Company -->
   <div class="row">
+    {% if patient.company %}
+    <!-- Company -->
     <div class="col">
       <p class="fs-4 mb-0"><strong>Companía: </strong>{{ patient.company }}</p>
     </div>
+    {% endif %}
+    <div class="col">
+      <p class="fs-4 mb-0">
+        <strong>Seguro Médico: </strong>
+        {% if patient.insurance %}
+        {{ patient.insurance }}
+        {% else %}
+        No tiene
+        {% endif %}
+      </p>
+    </div>
   </div>
-  {% endif %}
 
   <hr class="mt-4 mb-4">
 

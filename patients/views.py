@@ -76,7 +76,8 @@ def create_patient(request):
       company=str(request.POST['company']).strip(),
       allergies=str(request.POST['allergies']).strip(),
       patho_histo=str(request.POST['patho_histo']).strip(),
-      fam_histo=str(request.POST['fam_histo']).strip()
+      fam_histo=str(request.POST['fam_histo']).strip(),
+      insurance=str(request.POST['insurance']).strip()
     )
     p.save()
 
@@ -101,9 +102,10 @@ def edit_patient(request, pk):
     p.allergies=str(request.POST['allergies']).strip()
     p.patho_histo=str(request.POST['patho_histo']).strip()
     p.fam_histo=str(request.POST['fam_histo']).strip()
+    p.insurance=str(request.POST['insurance']).strip()
 
     p.save(update_fields=[
-      'names', 'last_names', 'bday', 'cel', 'id_num', 'mail', 'job', 'company', 'allergies', 'patho_histo', 'fam_histo'
+      'names', 'last_names', 'bday', 'cel', 'id_num', 'mail', 'job', 'company', 'allergies', 'patho_histo', 'fam_histo', 'insurance'
       ])
 
     return redirect('patient', pk=pk)

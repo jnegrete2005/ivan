@@ -44,7 +44,7 @@
   <div class="row row-cols-1 row-cols-md-3 mb-auto mb-md-3">
     <div class="col mb-3 mb-md-auto">
       <label for="mailInput" class="form-lable">Email</label>
-      <input type="email" name="mail" id="mailInput" value="{{ patient.mail }}" class="form-control" required>
+      <input type="email" name="mail" id="mailInput" value="{{ patient.mail }}" class="form-control">
     </div>
     <div class="col mb-3 mb-md-auto">
       <label for="jobInput" class="form-lable">Ocupación</label>
@@ -73,10 +73,18 @@
   </div>
 
   <!-- Family history -->
-  <div class="row mb-4">
+  <div class="row mb-auto mb-md-3">
     <div class="col">
       <label for="famInput" class="form-lable">Antec. Fam</label>
       <input type="text" name="fam_histo" id="famInput" value="{{ patient.fam_histo }}" class="form-control" maxlength="300">
+    </div>
+  </div>
+
+  <!-- Insurance -->
+  <div class="row mb-4">
+    <div class="col">
+      <label for="insuranceInput" class="form-lable">Seguro Médico</label>
+      <input type="text" name="insurance" id="insuranceInput" class="form-control" maxlength="100">
     </div>
   </div>
 

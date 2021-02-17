@@ -1,2 +1,2 @@
-start ivan
+start ivan.lnk
 exit

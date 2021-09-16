@@ -1,0 +1,2 @@
+./ivan.webloc
+exit
